@@ -16,6 +16,9 @@ class CubitCounterScreen extends StatelessWidget {
 
 class _CubitCounterView extends StatelessWidget {
   const _CubitCounterView();
+  void increaseCounterBy(BuildContext context, [int value = 1]) {
+    context.read<CounterCubit>().increaseBy(value);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,8 +36,9 @@ class _CubitCounterView extends StatelessWidget {
       ),
       body: Center(
         child: BlocBuilder<CounterCubit, CounterState>(
-          // buildWhen: (previous, current) => current.counter != previous.counter,
+          //   buildWhen: (previous, current) => current.counter != previous.counter,
           builder: (context, state) {
+            print('counter cambió');
             return Text('Counter value: ${state.counter}');
           },
         ),
@@ -44,19 +48,19 @@ class _CubitCounterView extends StatelessWidget {
         children: [
           FloatingActionButton(
             heroTag: 1,
-            onPressed: () => {context.read<CounterCubit>().increaseBy(3)},
+            onPressed: () => increaseCounterBy(context, 3),
             child: const Text('+3'),
           ),
           const SizedBox(height: 15),
           FloatingActionButton(
             heroTag: 2,
-            onPressed: () => {context.read<CounterCubit>().increaseBy(2)},
+            onPressed: () => increaseCounterBy(context, 2),
             child: const Text('+2'),
           ),
           const SizedBox(height: 15),
           FloatingActionButton(
             heroTag: 3,
-            onPressed: () => {context.read<CounterCubit>().increaseBy(1)},
+            onPressed: () => increaseCounterBy(context, 1),
             child: const Text('+1'),
           ),
         ],
