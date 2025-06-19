@@ -58,9 +58,7 @@ class _RegisterForm extends StatelessWidget {
           CustomTextFormField(
             label: 'Nombre de usuario',
             onChanged: registrerCubit.usernameChanged,
-            errorMessage: username.isPure || username.isValid
-                ? null
-                : 'Usuario no válido',
+            errorMessage: username.errorMessage,
           ),
           SizedBox(height: 20),
           CustomTextFormField(
