@@ -46,34 +46,27 @@ class _RegisterView extends StatelessWidget {
 class _RegisterForm extends StatelessWidget {
   _RegisterForm({super.key});
 
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
   @override
   Widget build(BuildContext context) {
     final registrerCubit = context.watch<RegistrerCubit>();
+    final username = registrerCubit.state.username;
+    final password = registrerCubit.state.password;
+
     return Form(
-      key: _formKey,
       child: Column(
         children: [
           CustomTextFormField(
             label: 'Nombre de usuario',
-            onChanged: (value) {
-              registrerCubit.usernameChanged(value);
-              _formKey.currentState!.validate();
-            },
-            validator: (value) {
-              if (value == null || value.isEmpty) return 'Campo requerido';
-              if (value.trim().isEmpty) return 'Campo requerido';
-              if (value.length < 6) return 'Más de 6 letras';
-              return null;
-            },
+            onChanged: registrerCubit.usernameChanged,
+            errorMessage: username.isPure || username.isValid
+                ? null
+                : 'Usuario no válido',
           ),
           SizedBox(height: 20),
           CustomTextFormField(
             label: 'Correo electrónico',
             onChanged: (value) {
               registrerCubit.emailChanged(value);
-              _formKey.currentState!.validate();
             },
             validator: (value) {
               if (value == null || value.isEmpty) return 'Campo requerido';
@@ -89,7 +82,6 @@ class _RegisterForm extends StatelessWidget {
             obscureText: true,
             onChanged: (value) {
               registrerCubit.passwordChanged(value);
-              _formKey.currentState!.validate();
             },
             validator: (value) {
               if (value == null || value.isEmpty) return 'Campo requerido';
@@ -101,8 +93,6 @@ class _RegisterForm extends StatelessWidget {
           SizedBox(height: 30),
           FilledButton.tonalIcon(
             onPressed: () {
-              // final isValid = _formKey.currentState!.validate();
-              //if (!isValid) return;
               registrerCubit.onSubmit();
             },
             label: const Text('Crear usuario'),
