@@ -101,8 +101,8 @@ class _RegisterForm extends StatelessWidget {
           SizedBox(height: 30),
           FilledButton.tonalIcon(
             onPressed: () {
-              final isValid = _formKey.currentState!.validate();
-              if (!isValid) return;
+              // final isValid = _formKey.currentState!.validate();
+              //if (!isValid) return;
               registrerCubit.onSubmit();
             },
             label: const Text('Crear usuario'),
